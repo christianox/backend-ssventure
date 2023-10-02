@@ -97,8 +97,7 @@ const addParticipant = async (req, res) => {
 const removeParticipant = async (req, res) => {
     try {
         const { id } = req.params;
-        const { userId } = req.params;
-        
+        const { userId } = req.body;
         const connection = await getConnection();
         const result = await connection.query("DELETE FROM evenHasParticipant WHERE eventId = ? AND userId = ?", [id, userId]);
         res.json({message: "Participante Removido"});

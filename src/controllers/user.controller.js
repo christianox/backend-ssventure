@@ -5,7 +5,7 @@ const crypto = require("crypto");
 const getUsers = async (req, res) => {
     try {
         const connection = await getConnection();
-        const result = await connection.query("SELECT id, fullName, email, userName, userPassword as usrPass, isDelete FROM users");
+        const result = await connection.query("SELECT id, fullName, email, userName, usrPassword as usrPass, isDelete FROM users");
         res.json(result);
     } catch (error) {
         res.status(500);
@@ -17,7 +17,7 @@ const getUser = async (req, res) => {
     try {
         const { id } = req.params;
         const connection = await getConnection();
-        const result = await connection.query("SELECT id, fullName, email, userName, userPassword as usrPass, isDelete FROM users WHERE id = ?", id);
+        const result = await connection.query("SELECT id, fullName, email, userName, usrPassword as usrPass, isDelete FROM users WHERE id = ?", id);
         res.json(result);
     } catch (error) {
         res.status(500);
