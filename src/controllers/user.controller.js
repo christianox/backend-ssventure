@@ -1,6 +1,7 @@
 import { getConnection } from "./../database/database"
 
-const crypto = require("crypto");
+const bcrypt = require('bcrypt');
+const saltRounds = 8;
 
 const getUsers = async (req, res) => {
     try {
@@ -92,9 +93,7 @@ const authUser = async (req, res) => {
         const connection = await getConnection();
         const userExist = await connection.query("SELECT id, fullName, email, usrPassword as usrPass, userName, isDelete FROM users WHERE isDelete > 0 AND email = ? AND usrPassword = ?", [email, usrPass]);
         
-        const encrypPassword = checkhashAES256(usrPass);
         const result = JSON.parse(JSON.stringify(userExist));
-        
         if(usrPass === result[0].usrPass) {
             res.json({ message: "Usuario encontrado", user: userExist });
         } else {
@@ -116,19 +115,6 @@ export const methods = {
     authUser
 };
 
-function hashAES256(password){
-    // let cipher = crypto.createCipher('aes-256-cbc', secretKey);
-
-    // let encryptedText = cipher.update(plaintext, 'utf8', 'hex');
-    // encryptedText += cipher.final('hex');
-    // return encryptedText;
-    return password;
-};
-
-function checkhashAES256(password) {
-    // const decipher = crypto.createDecipher('aes-256-cbc', secretKey);
-
-    // let decryptedText = decipher.update(encryptedText, 'hex', 'utf8');
-    // return decryptedText += decipher.final('utf8');
+function hashAES256(password) {
     return password;
 }
